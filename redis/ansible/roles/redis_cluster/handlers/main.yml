@@ -1,0 +1,4 @@
+---
+# handlers file for docker_deploy
+- name: compose_up
+  ansible.builtin.command: docker-compose up --d --scale redis-master=1 --scale redis-replica=3

@@ -1,0 +1,9 @@
+---
+ - hosts: redis
+   become: True
+   gather_facts: yes
+   roles:
+     - role: docker
+     - role: redis_cluster
+       dependencies:
+       - {role: docker}

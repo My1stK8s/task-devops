@@ -1,0 +1,32 @@
+---
+- name: "Copy docker compose file for redis"
+  template:
+    src: "../templates/docker-compose.yml.j2"
+    dest: ./docker-compose.yml
+    force: true
+    owner: root
+    mode: 0644
+  notify:
+    - compose_up
+
+- name: Create an SRV record test01.example.com
+  community.general.cloudflare_dns:
+    domain: example.com
+    service: redis_cluster
+    proto: tcp
+    port: 6379 
+    priority: 10
+    weight: 20 
+    type: SRV
+    value: test01.example.com
+
+- name: Create an SRV record test02.example.com
+  community.general.cloudflare_dns:
+    domain: example.com
+    service: redis_cluster2
+    proto: tcp
+    port: 6379 
+    priority: 10
+    weight: 20 
+    type: SRV
+    value: test02.example.com
